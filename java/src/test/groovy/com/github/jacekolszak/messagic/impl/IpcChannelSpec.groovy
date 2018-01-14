@@ -2,7 +2,6 @@ package com.github.jacekolszak.messagic.impl
 
 import com.github.jacekolszak.messagic.FatalError
 import com.github.jacekolszak.messagic.MessageChannel
-import com.github.jacekolszak.messagic.impl.Ipc
 import spock.lang.Specification
 import spock.lang.Subject
 
@@ -31,17 +30,6 @@ class IpcChannelSpec extends Specification {
             channel == ipc.channel()
     }
 
-    // PROTOKOL - CECHY
-    // latwy w debugowaniu - tekst wskazany bez zadnych udziwnien
-    // mozliwosc wyslania takze binarnych danych
-    // mozliwosc debugowania co jest wysylane binarnie (Base64)
-    // mozliwosc latwego parsowania
-    // mozliwosc strzelania z palca do serwera (uruchamiamy w idei i piszemy do konsoli - sic!)
-
-    // wiadomoscTekstowa\n
-    // #sdw23=\n   -- binarna wiadomosc w base64
-    // """wiadomosc \ntekstowa"""\n   - tekstowa wiadomosc z enterami
-    // !blad
     void 'should send text message to stream'() {
         when:
             channel.pushText('textMessage')
@@ -261,24 +249,6 @@ class IpcChannelSpec extends Specification {
             errorReceived.isPeerNotReachable()
             errorReceived.message() == 'Payload of received error message exceeded maximum size'
     }
-
-//
-//    void 'request/response example'() {
-//        given:
-//            Ipc ipc = new Ipc(System.in, System.out)
-//            MessageChannel channel = ipc.channel()
-//            RequestResponsePattern pattern = new RequestResponsePattern(channel) // retry dzieje sie w warstwie transportowej websocketow, timeouty nie potrzebne bo to tez warstwa transportowa zalatwi
-//        when:
-//            CompletableFuture<byte[]> response = pattern.request('payload'.bytes)
-//        then:
-//            // dokleja numerek
-//            // [numerek,':','w','i','a','d','o','m','o','s','c']
-//
-//            channel.setBinaryMessageConsumer { msg ->
-//                RequestResponsePattern.MessageReceived request = pattern.requestReceived(msg)
-//                request.respondWith('some repsonse'.bytes) // jesli nie bylo numerka to odpowiada bez numerka
-//            }
-//    }
 
     class ErrorConsumerMock implements Consumer<FatalError> {
 
