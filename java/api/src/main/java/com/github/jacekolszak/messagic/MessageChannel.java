@@ -8,14 +8,6 @@ import java.util.function.Consumer;
 public interface MessageChannel {
 
     /**
-     * Exceeding the maximum size either during pushing messages or receiving them will close the
-     * channel and report error
-     */
-    void setBinaryMessageMaximumSize(int bytes);
-
-    void setTextMessageMaximumSize(int characters);
-
-    /**
      * @param consumer If consumer throws runtime exception then error message is sent to a peer
      */
     void setBinaryMessageConsumer(Consumer<byte[]> consumer);
@@ -33,10 +25,18 @@ public interface MessageChannel {
 
     void open();
 
+    void send(String textMessage);
+
+    void send(byte[] binaryMessage);
+
     void close();
 
-    void send(String message);
+    /**
+     * Exceeding the maximum size either during pushing messages or receiving them will close the
+     * channel and report error
+     */
+    void setBinaryMessageMaximumSize(int bytes);
 
-    void send(byte[] message);
+    void setTextMessageMaximumSize(int characters);
 
 }
