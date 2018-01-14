@@ -12,4 +12,4 @@ When to use?
 Use case
 ========
 
-+ I use this project myself in a computer game which can be played in the browser or downloaded as a desktop application. Different transport protocols are used for different client - web client uses websockets, desktop client uses standard I/O.
++ I use this project myself in a computer game which can be played in the browser or downloaded as a desktop application. Different transport protocols are used for different clients - web client uses websockets, desktop client uses standard I/O.
