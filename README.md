@@ -13,3 +13,8 @@ Use case
 ========
 
 + I use this project myself in a computer game which can be played in the browser or downloaded as a desktop application. Different transport protocols are used for different clients - web client uses websockets, desktop client uses standard I/O.
+
+Implementations
+===============
+
++ Java [messagic-java](https://github.com/jacekolszak/messagic-java)
