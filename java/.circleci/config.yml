@@ -1,4 +1,6 @@
 version: 2
+general:
+  build_dir: java
 jobs:
   build:
     docker:
@@ -20,7 +22,7 @@ jobs:
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
 
-      - run: gradle dependencies
+      - run: ./gradlew dependencies
 
       - save_cache:
           paths:
