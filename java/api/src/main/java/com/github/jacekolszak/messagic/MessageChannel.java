@@ -16,18 +16,18 @@ public interface MessageChannel {
     void setTextMessageMaximumSize(int characters);
 
     /**
-     * If consumer throw exception then channel is closed with special error
+     * @param consumer If consumer throws runtime exception then error message is sent to a peer
      */
     void setBinaryMessageConsumer(Consumer<byte[]> consumer);
 
     /**
-     * If consumer throw exception then channel is closed with special error
+     * @param consumer If consumer throws runtime exception then error message is sent to a peer
      */
     void setTextMessageConsumer(Consumer<String> consumer);
 
     /**
-     * FatalError is returned when other party thrown exception during message consumption or that party was unreachable (down, had networks problems etc.).
-     * In such channel case channel should be recreated.
+     * FatalError is returned when a peer thrown runtime exception during message consumption
+     * or the peer was unreachable (down, had networks problems etc.).
      */
     void setErrorConsumer(Consumer<FatalError> consumer);
 
@@ -35,8 +35,8 @@ public interface MessageChannel {
 
     void close();
 
-    void pushText(String message);
+    void send(String message);
 
-    void pushBinary(byte[] message);
+    void send(byte[] message);
 
 }

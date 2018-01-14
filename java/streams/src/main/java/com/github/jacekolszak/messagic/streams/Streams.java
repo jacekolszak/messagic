@@ -34,7 +34,7 @@ public class Streams {
         private int binaryMessageMaximumSize = 8192;
         private int textMessageMaximumSize = 8192;
         private Consumer<String> decodingErrorConsumer = error -> {
-            pushError(error);
+            sendError(error);
         };
 
         @Override
@@ -53,7 +53,7 @@ public class Streams {
                 try {
                     consumer.accept(msg);
                 } catch (RuntimeException e) {
-                    pushError(e.getMessage());
+                    sendError(e.getMessage());
                 }
             };
         }
@@ -64,7 +64,7 @@ public class Streams {
                 try {
                     consumer.accept(msg);
                 } catch (RuntimeException e) {
-                    pushError(e.getMessage());
+                    sendError(e.getMessage());
                 }
             };
         }
@@ -86,9 +86,9 @@ public class Streams {
         }
 
         @Override
-        public void pushBinary(byte[] message) {
+        public void send(byte[] message) {
             if (message.length > binaryMessageMaximumSize) {
-                errorConsumer.accept(new EndpointNotReachable("Payload of pushed binary message exceeded maximum size"));
+                errorConsumer.accept(new EndpointNotReachable("Payload of sent binary message exceeded maximum size"));
                 close();
             } else {
                 try {
@@ -102,9 +102,9 @@ public class Streams {
         }
 
         @Override
-        public void pushText(String message) {
+        public void send(String message) {
             if (message.length() > textMessageMaximumSize) {
-                errorConsumer.accept(new EndpointNotReachable("Payload of pushed text message exceeded maximum size"));
+                errorConsumer.accept(new EndpointNotReachable("Payload of sent text message exceeded maximum size"));
                 close();
             } else {
                 try {
@@ -116,8 +116,8 @@ public class Streams {
             }
         }
 
-        private void pushError(String error) {
-            pushText('!' + error); // TODO haksiorski myk
+        private void sendError(String error) {
+            send('!' + error); // TODO hack
         }
 
     }

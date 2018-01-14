@@ -32,14 +32,14 @@ class StreamsChannelSpec extends Specification {
 
     void 'should send text message to stream'() {
         when:
-            channel.pushText('textMessage')
+            channel.send('textMessage')
         then:
             output.toString() == 'textMessage\n'
     }
 
     void 'binary messages should be encoded using base64 with "#" character as a prefix and new line in the end'() {
         when:
-            channel.pushBinary([1, 2, 3] as byte[])
+            channel.send([1, 2, 3] as byte[])
         then:
             output.toString() == '#AQID\n'
     }
@@ -146,7 +146,7 @@ class StreamsChannelSpec extends Specification {
             channel.open()
         when:
             outputPipe.close()
-            channel.pushText('test')
+            channel.send('test')
         then:
             latch.await(2, TimeUnit.SECONDS)
             errorConsumer.errorReceived.isPeerNotReachable()
@@ -164,13 +164,13 @@ class StreamsChannelSpec extends Specification {
             channel.open()
         when:
             outputPipe.close()
-            channel.pushBinary([1] as byte[])
+            channel.send([1] as byte[])
         then:
             latch.await(2, TimeUnit.SECONDS)
             errorConsumer.errorReceived.isPeerNotReachable()
     }
 
-    void 'should report error and close the channel when pushed binary message was big'() {
+    void 'should report an error and close the channel when sent binary message was too big'() {
         given:
             CountDownLatch latch = new CountDownLatch(1)
             channel.binaryMessageMaximumSize = 16
@@ -178,15 +178,15 @@ class StreamsChannelSpec extends Specification {
             channel.errorConsumer = errorConsumer
             channel.open()
         when:
-            channel.pushBinary(new byte[17])
+            channel.send(new byte[17])
         then:
             latch.await(2, TimeUnit.SECONDS)
             FatalError errorReceived = errorConsumer.errorReceived
             errorReceived.isPeerNotReachable()
-            errorReceived.message() == 'Payload of pushed binary message exceeded maximum size'
+            errorReceived.message() == 'Payload of sent binary message exceeded maximum size'
     }
 
-    void 'should report error and close the channel when pushed text message was big'() {
+    void 'should report an error and close the channel when sent text message was too big'() {
         given:
             CountDownLatch latch = new CountDownLatch(1)
             channel.textMessageMaximumSize = 5
@@ -194,12 +194,12 @@ class StreamsChannelSpec extends Specification {
             channel.errorConsumer = errorConsumer
             channel.open()
         when:
-            channel.pushText('123456')
+            channel.send('123456')
         then:
             latch.await(2, TimeUnit.SECONDS)
             FatalError errorReceived = errorConsumer.errorReceived
             errorReceived.isPeerNotReachable()
-            errorReceived.message() == 'Payload of pushed text message exceeded maximum size'
+            errorReceived.message() == 'Payload of sent text message exceeded maximum size'
     }
 
     void 'should report and close the channel when received binary message was too big'() {
