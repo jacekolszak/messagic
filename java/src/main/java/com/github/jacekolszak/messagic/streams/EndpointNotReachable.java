@@ -1,4 +1,4 @@
-package com.github.jacekolszak.messagic.impl;
+package com.github.jacekolszak.messagic.streams;
 
 import com.github.jacekolszak.messagic.FatalError;
 

@@ -1,4 +1,4 @@
-package com.github.jacekolszak.messagic.impl;
+package com.github.jacekolszak.messagic.streams;
 
 import java.io.BufferedInputStream;
 import java.io.EOFException;
@@ -10,7 +10,7 @@ import java.util.function.Consumer;
 
 import com.github.jacekolszak.messagic.FatalError;
 
-class IpcDecoder {
+class InputStreamDecoder {
 
     private final Consumer<String> textConsumer;
     private final Consumer<byte[]> binaryConsumer;
@@ -22,7 +22,7 @@ class IpcDecoder {
     private Thread thread;
     private volatile boolean stopped;
 
-    IpcDecoder(InputStream input, Consumer<String> textConsumer, Consumer<byte[]> binaryConsumer, Consumer<FatalError> errorConsumer, Consumer<String> decodingErrorConsumer, int binaryMessageMaximumSize, int textMessageMaximumSize) {
+    InputStreamDecoder(InputStream input, Consumer<String> textConsumer, Consumer<byte[]> binaryConsumer, Consumer<FatalError> errorConsumer, Consumer<String> decodingErrorConsumer, int binaryMessageMaximumSize, int textMessageMaximumSize) {
         this.input = input;
         this.textConsumer = textConsumer;
         this.binaryConsumer = binaryConsumer;

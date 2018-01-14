@@ -1,4 +1,4 @@
-package com.github.jacekolszak.messagic.impl;
+package com.github.jacekolszak.messagic.streams;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -9,28 +9,28 @@ import java.util.function.Consumer;
 import com.github.jacekolszak.messagic.FatalError;
 import com.github.jacekolszak.messagic.MessageChannel;
 
-public class Ipc {
+public class Streams {
 
     private final InputStream input;
     private final OutputStream output;
-    private final IpcMessageChannel channel;
+    private final StreamsMessageChannel channel;
 
-    public Ipc(InputStream input, OutputStream output) {
+    public Streams(InputStream input, OutputStream output) {
         this.input = input;
         this.output = output;
-        channel = new IpcMessageChannel();
+        channel = new StreamsMessageChannel();
     }
 
     public MessageChannel channel() {
         return channel;
     }
 
-    private class IpcMessageChannel implements MessageChannel {
+    private class StreamsMessageChannel implements MessageChannel {
 
         private Consumer<String> textConsumer;
         private Consumer<byte[]> binaryConsumer;
         private Consumer<FatalError> errorConsumer;
-        private IpcDecoder decoder;
+        private InputStreamDecoder decoder;
         private int binaryMessageMaximumSize = 8192;
         private int textMessageMaximumSize = 8192;
         private Consumer<String> decodingErrorConsumer = error -> {
@@ -76,7 +76,7 @@ public class Ipc {
 
         @Override
         public void open() {
-            decoder = new IpcDecoder(input, textConsumer, binaryConsumer, errorConsumer, decodingErrorConsumer, binaryMessageMaximumSize, textMessageMaximumSize);
+            decoder = new InputStreamDecoder(input, textConsumer, binaryConsumer, errorConsumer, decodingErrorConsumer, binaryMessageMaximumSize, textMessageMaximumSize);
             decoder.start();
         }
 

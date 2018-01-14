@@ -1,4 +1,4 @@
-package com.github.jacekolszak.messagic.impl
+package com.github.jacekolszak.messagic.streams
 
 import com.github.jacekolszak.messagic.FatalError
 import com.github.jacekolszak.messagic.MessageChannel
@@ -9,25 +9,25 @@ import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 import java.util.function.Consumer
 
-class IpcChannelSpec extends Specification {
+class StreamsChannelSpec extends Specification {
 
     private final PipedInputStream input = new PipedInputStream()
     private final PipedOutputStream inputPipe = new PipedOutputStream(input)
     private final ByteArrayOutputStream output = new ByteArrayOutputStream()
 
-    private final Ipc ipc = new Ipc(input, output)
+    private final Streams streams = new Streams(input, output)
 
     @Subject
-    private final MessageChannel channel = ipc.channel()
+    private final MessageChannel channel = streams.channel()
 
     void 'should create channel'() {
         expect:
             channel != null
     }
 
-    void 'should always return same channel instance. It is not possible to have two different channels on same stdin and stdout'() {
+    void 'should always return same channel instance. It is not possible to have two different channels on same InputStream and OutputStream'() {
         expect:
-            channel == ipc.channel()
+            channel == streams.channel()
     }
 
     void 'should send text message to stream'() {
@@ -138,8 +138,8 @@ class IpcChannelSpec extends Specification {
         given:
             PipedOutputStream out = new PipedOutputStream()
             PipedInputStream outputPipe = new PipedInputStream(out)
-            Ipc ipc = new Ipc(input, out)
-            MessageChannel channel = ipc.channel()
+            Streams streams = new Streams(input, out)
+            MessageChannel channel = streams.channel()
             CountDownLatch latch = new CountDownLatch(1)
             ErrorConsumerMock errorConsumer = new ErrorConsumerMock(latch)
             channel.errorConsumer = errorConsumer
@@ -156,8 +156,8 @@ class IpcChannelSpec extends Specification {
         given:
             PipedOutputStream out = new PipedOutputStream()
             PipedInputStream outputPipe = new PipedInputStream(out)
-            Ipc ipc = new Ipc(input, out)
-            MessageChannel channel = ipc.channel()
+            Streams streams = new Streams(input, out)
+            MessageChannel channel = streams.channel()
             CountDownLatch latch = new CountDownLatch(1)
             ErrorConsumerMock errorConsumer = new ErrorConsumerMock(latch)
             channel.errorConsumer = errorConsumer
