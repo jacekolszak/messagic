@@ -17,4 +17,4 @@ Use case
 Implementations
 ===============
 
-+ Java [messagic-java](https://github.com/jacekolszak/messagic-java)
++ Java: [messagic-java on GitHub](https://github.com/jacekolszak/messagic-java)
