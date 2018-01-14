@@ -1,0 +1,16 @@
+apply plugin: 'groovy'
+sourceCompatibility = JavaVersion.VERSION_1_9
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'org.codehaus.groovy', name: 'groovy-all', version: '2.4.13'
+    testCompile group: 'org.spockframework', name: 'spock-core', version: '1.1-groovy-2.4'
+}
+
+task jlink(type:Exec) {
+    commandLine './link.sh'
+}
