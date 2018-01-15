@@ -18,3 +18,4 @@ Implementations
 ===============
 
 + Java: [messagic-java on GitHub](https://github.com/jacekolszak/messagic-java)
++ JavaScript: [messagic-js on GitHub](https://github.com/jacekolszak/messagic-js)
