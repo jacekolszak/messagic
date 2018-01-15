@@ -1,5 +1,5 @@
 # Messagic
-High level API for messaging
+High level API for reliable message passing
 
 + send messages between two peers over any reliable transport protocol (such as standard I/O, TCP, websockets over HTTP)
 + implementations in Java and JavaScript
