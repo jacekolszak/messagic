@@ -1,7 +1,7 @@
 # Messagic
-High level API for reliable message passing
+High level API for asynchronous message passing
 
-+ asynchronously send messages between two peers over any reliable transport protocol (such as standard I/O, TCP, websockets over HTTP)
++ send and receive messages in order between two peers over any reliable transport protocol (such as standard I/O, TCP, websockets etc.)
 + implementations in Java and JavaScript
 
 When to use?
