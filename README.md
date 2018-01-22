@@ -8,6 +8,7 @@ When to use?
 ============
 
 + when you want to use different transport protocols without changing your code
++ when you want to unit test your code without starting web servers
 
 Use case
 ========
