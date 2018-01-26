@@ -1,7 +1,7 @@
 # Messagic
 High level API for asynchronous message passing
 
-+ send and receive messages in order between two peers over any reliable transport protocol (such as standard I/O, TCP, websockets etc.)
++ send and receive messages in order between two programs over any reliable transport protocol (such as standard I/O, TCP, websockets etc.)
 + implementations in [Java](https://github.com/jacekolszak/messagic-java) and [JavaScript](https://github.com/jacekolszak/messagic-js)
 
 When to use?
